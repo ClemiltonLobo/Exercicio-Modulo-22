@@ -88,7 +88,7 @@ MonoBehaviour:
   timeToHide: 0
   graphicItens: {fileID: 4310908987939517742}
   audioSource: {fileID: 0}
-  duration: 3
+  duration: 4
   sizeAmount: 28
 --- !u!1 &8663027546823680137
 GameObject:
