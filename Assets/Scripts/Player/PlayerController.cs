@@ -16,6 +16,8 @@ public class PlayerController : Singleton<PlayerController>
     public float speed = 1f;
     public string tagToCheckEnemy = "Enemy";
     public string tagToCheckEndLine = "EndLine";
+    public float minX = -5f; // o limite mínimo da posição x
+    public float maxX = 5f; // o limite máximo da posição x
     //public Rigidbody rb;
 
     [Header("Text PowerUp Name")]
@@ -42,7 +44,7 @@ public class PlayerController : Singleton<PlayerController>
 
     void Update()
     {
-        if(!_canRun) return;
+        if (!_canRun) return;
         //_pos = target.position;
         _pos.y = transform.position.y;
         _pos.z = transform.position.z;
@@ -50,6 +52,11 @@ public class PlayerController : Singleton<PlayerController>
         //transform.position = Vector3.Lerp(transform.position, _pos, lerpSpeed * Time.deltaTime);
         transform.Translate(transform.forward * _currentSpeed * Time.deltaTime);
         //rb.AddForce(Vector3.forward * speed * _currentSpeed);
+
+        // modificando o método Update para usar o Mathf.Clamp e o transform.Translate
+        float x = Input.GetAxis("Horizontal") * speed * Time.deltaTime; // a quantidade que o player vai se mover no eixo x
+        x = Mathf.Clamp(transform.position.x + x, minX, maxX) - transform.position.x; // limita a posição x do player entre os valores mínimos e máximos
+        transform.Translate(x, 0, 0); // move o player no eixo x
     }
 
     private void OnCollisionEnter(Collision collision)
