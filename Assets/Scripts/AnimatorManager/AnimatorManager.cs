@@ -11,7 +11,8 @@ public class AnimatorManager : MonoBehaviour
         IDLE,
         RUN,
         DEAD,
-        VICTORY
+        VICTORY,
+        LocomotionPose
     }
 
     public void Play(AnimationType type, float currentSpeedFactor = 1)
@@ -43,6 +44,10 @@ public class AnimatorManager : MonoBehaviour
      else if (!Input.GetKeyUp(KeyCode.Alpha4))
         {
             Play(AnimationType.VICTORY);
+        }
+     else if(!Input.GetKeyUp(KeyCode.Alpha5))
+        {
+            Play(AnimationType.LocomotionPose);
         }
     }
 }

@@ -28,6 +28,9 @@ public class PlayerController : Singleton<PlayerController>
     [Header("Collector Candys")]
     public GameObject CandyCollector;
 
+    [Header("Animation")]
+    public AnimatorManager animatorManager;
+
     //privates
     private bool _canRun;
     private Vector3 _pos;
@@ -62,18 +65,14 @@ public class PlayerController : Singleton<PlayerController>
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.transform.tag == tagToCheckEnemy)
-        {
+        {            
             if (!invecible) LoadLoserScene();
-        }
-        if (collision.transform.tag == "Finish")
-        {
-            print("colidiu com a parede");
-        }
+        }        
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == tagToCheckEndLine)
-        {
+        {            
             if (!invecible) LoadWinnerScene();
         }
     }
@@ -86,12 +85,14 @@ public class PlayerController : Singleton<PlayerController>
     private void LoadLoserScene()
     {
         _canRun = false;
+        
         SceneManager.LoadScene("LoserScene");
     }
 
     public void StartToRun()
     {
         _canRun=true;
+        animatorManager.Play(AnimatorManager.AnimationType.RUN);
     }
 
     #region PowerUps
