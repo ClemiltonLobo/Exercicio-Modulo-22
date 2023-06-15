@@ -179,7 +179,7 @@ MonoBehaviour:
   timeToHide: 0
   graphicItens: {fileID: 4388107755946258488}
   audioSource: {fileID: 0}
-  duration: 8
+  duration: 9
   amountFly: 65
   animationDuration: 1
   ease: 23
@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleInvencible: {fileID: 0}
-  delay: 8
+  delay: 9
 --- !u!1 &6616776348458663910
 GameObject:
   m_ObjectHideFlags: 0

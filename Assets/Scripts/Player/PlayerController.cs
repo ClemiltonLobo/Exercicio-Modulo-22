@@ -43,6 +43,7 @@ public class PlayerController : Singleton<PlayerController>
         _startPosition = transform.position;
         ResetSpeed();
         _canRun = true;
+        animatorManager.Play(AnimatorManager.AnimationType.RUN);
     }
 
     void Update()
@@ -53,8 +54,8 @@ public class PlayerController : Singleton<PlayerController>
         _pos.z = transform.position.z;
 
         //transform.position = Vector3.Lerp(transform.position, _pos, lerpSpeed * Time.deltaTime);
-        transform.Translate(transform.forward * _currentSpeed * Time.deltaTime);
         //rb.AddForce(Vector3.forward * speed * _currentSpeed);
+        transform.Translate(transform.forward * _currentSpeed * Time.deltaTime);
 
         // modificando o método Update para usar o Mathf.Clamp e o transform.Translate
         float x = Input.GetAxis("Horizontal") * speed * Time.deltaTime; // a quantidade que o player vai se mover no eixo x
@@ -64,35 +65,52 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.tag == tagToCheckEnemy)
-        {            
-            if (!invecible) LoadLoserScene();
-        }        
+        if (collision.transform.CompareTag(tagToCheckEnemy))
+        {
+            if (!invecible)
+            {
+                _canRun = false;
+                animatorManager.Play(AnimatorManager.AnimationType.DEAD);
+                StartCoroutine(PlayDeadAnimationAndWait());
+            }
+        }
     }
+
+    private IEnumerator PlayDeadAnimationAndWait()
+    {
+        yield return new WaitForSeconds(animatorManager.GetAnimationLength(AnimatorManager.AnimationType.DEAD));
+        LoadLoserScene();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.tag == tagToCheckEndLine)
-        {            
-            if (!invecible) LoadWinnerScene();
+        if (other.transform.CompareTag(tagToCheckEndLine))
+        {
+            if (!invecible)
+            {
+                _canRun = false;
+                animatorManager.Play(AnimatorManager.AnimationType.VICTORY);
+                LoadWinnerScene();
+            }
         }
     }
 
     private void LoadWinnerScene()
-    {
+    {        
         SceneManager.LoadScene("WinnerScene");
     }
 
     private void LoadLoserScene()
-    {
-        _canRun = false;
-        
-        SceneManager.LoadScene("LoserScene");
+    {        
+        {
+            SceneManager.LoadScene("LoserScene");
+        }
     }
 
     public void StartToRun()
     {
         _canRun=true;
-        animatorManager.Play(AnimatorManager.AnimationType.RUN);
+        animatorManager.Play(AnimatorManager.AnimationType.LocomotionPose);
     }
 
     #region PowerUps

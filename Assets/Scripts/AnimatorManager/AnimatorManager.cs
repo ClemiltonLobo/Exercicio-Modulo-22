@@ -41,14 +41,27 @@ public class AnimatorManager : MonoBehaviour
         {
             Play(AnimationType.IDLE);
         }
-     else if (!Input.GetKeyUp(KeyCode.Alpha4))
+     else if (Input.GetKeyUp(KeyCode.Alpha4))
         {
             Play(AnimationType.VICTORY);
         }
-     else if(!Input.GetKeyUp(KeyCode.Alpha5))
+     else if(Input.GetKeyUp(KeyCode.Alpha5))
         {
             Play(AnimationType.LocomotionPose);
         }
+    }
+
+    public float GetAnimationLength(AnimationType type)
+    {
+        foreach (var animation in animatorSetups)
+        {
+            if (animation.type == type)
+            {
+                return animator.GetCurrentAnimatorStateInfo(0).length / animation.speed;
+            }
+        }
+
+        return 0f;
     }
 }
 [System.Serializable]
