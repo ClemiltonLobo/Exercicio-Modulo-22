@@ -13,6 +13,7 @@ public class PauseManager : MonoBehaviour
     public GameObject ButtonBackMenu;
     
     public AudioSource ambienteAudioSource;
+    public AudioSource footstepsAudio;
 
     public void TogglePause()
     {
@@ -25,6 +26,7 @@ public class PauseManager : MonoBehaviour
             TextPause.SetActive(true);
             ButtonBackMenu.SetActive(true);            
             ambienteAudioSource.Pause();
+            footstepsAudio.Pause();
         }
         else
         {
@@ -33,6 +35,7 @@ public class PauseManager : MonoBehaviour
             TextPause.SetActive(false);
             ButtonBackMenu.SetActive(false);
             ambienteAudioSource.UnPause();
+            footstepsAudio.UnPause();
         }
     }
 
