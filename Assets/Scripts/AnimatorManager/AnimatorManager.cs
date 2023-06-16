@@ -12,7 +12,13 @@ public class AnimatorManager : MonoBehaviour
         RUN,
         DEAD,
         VICTORY,
-        LocomotionPose
+        LocomotionPose,
+        CRY
+    }
+
+    public void Start()
+    {
+        Play(AnimationType.CRY);
     }
 
     public void Play(AnimationType type, float currentSpeedFactor = 1)
