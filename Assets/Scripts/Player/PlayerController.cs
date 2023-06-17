@@ -90,9 +90,15 @@ public class PlayerController : Singleton<PlayerController>
             {
                 _canRun = false;
                 animatorManager.Play(AnimatorManager.AnimationType.VICTORY);
-                LoadWinnerScene();
+                StartCoroutine(PlayVictoryAnimationAndWait());
             }
         }
+    }
+
+    private IEnumerator PlayVictoryAnimationAndWait()
+    {
+        yield return new WaitForSeconds(animatorManager.GetAnimationLength(AnimatorManager.AnimationType.VICTORY));
+        LoadWinnerScene();
     }
 
     private void LoadWinnerScene()
